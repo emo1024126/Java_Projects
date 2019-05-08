@@ -1,8 +1,7 @@
 package com.emo.demo.dao;
 
 import com.emo.demo.entity.UserEntity;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -20,4 +19,16 @@ public interface UserMapper {
 	@Delete("delete from t_user where user_id like #{userId}")
 	int delete(String userId);
 
+
+	@InsertProvider(type = InsertSQLProvider.class, method = "insertUser")
+	int insertUser(UserEntity userEntity);
+
+	@SelectProvider(type = SelectSQLProvider.class, method = "findByUserId")
+	List<UserEntity> findByUserId(String userId);
+
+	@DeleteProvider(type = DeleteSQLProvider.class, method = "deleteByUserId")
+	int deleteByUserId(String userId);
+
+	@UpdateProvider(type = UpdateSQLProvider.class, method = "updateByUserId")
+	int updateByUserId(UserEntity userEntity);
 }
